@@ -33,9 +33,9 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);over
   transition:background .4s,backdrop-filter .4s;
 }
 #nav.scrolled{
-  background:rgba(250,248,244,0.92);
+  background:rgba(28,26,23,0.92);
   backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--rule);
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 .nav-links{display:flex;gap:36px;align-items:center}
 .nav-links.right{justify-content:flex-end}
@@ -43,7 +43,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);over
   font-family:'Jost',sans-serif;
   font-size:11px;letter-spacing:3px;
   text-transform:uppercase;font-weight:400;
-  color:var(--ink);text-decoration:none;
+  color:var(--white);text-decoration:none;
   transition:color .2s;
 }
 #nav.hero-mode .nav-links a{color:var(--white)}
@@ -53,14 +53,14 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);over
   font-family:'Cormorant Garamond',serif;
   font-size:13px;letter-spacing:5px;
   text-transform:uppercase;font-weight:400;
-  color:var(--ink);text-decoration:none;
+  color:var(--white);text-decoration:none;
   text-align:center;line-height:1.5;
   transition:color .2s;
 }
 .nav-brand span{color:var(--gold)}
 .nav-menu-btn{
   display:none;background:none;border:none;
-  cursor:pointer;padding:4px;
+  cursor:pointer;padding:4px;color:var(--white);
 }
 .nav-menu-btn svg{width:22px;height:16px}
 
@@ -69,6 +69,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);over
   position:relative;width:100%;height:100vh;
   min-height:620px;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
+  background:var(--ink);
 }
 #hero img.hero-bg{
   position:absolute;inset:0;width:100%;height:100%;
@@ -76,65 +77,47 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);over
 }
 #hero::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(20,17,13,.38) 0%,rgba(20,17,13,.55) 100%);
+  background:linear-gradient(180deg,rgba(20,17,13,.45) 0%,rgba(20,17,13,.62) 100%);
   z-index:1;
 }
 .hero-body{
   position:relative;z-index:2;
-  text-align:center;color:var(--white);
-  display:flex;flex-direction:column;align-items:center;gap:0;
-  padding:0 20px;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;
 }
-.hero-eyebrow{
-  font-family:'Jost',sans-serif;
-  font-size:10px;letter-spacing:5px;
-  text-transform:uppercase;font-weight:300;
-  opacity:.75;margin-bottom:20px;
+.hero-logo{
+  width:clamp(180px,35vw,420px);
+  height:auto;
+  display:block;
 }
-.hero-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(3rem,8vw,7rem);
-  font-weight:300;font-style:italic;
-  line-height:1;letter-spacing:2px;
-  color:var(--white);
-}
-.hero-title strong{font-weight:400;font-style:normal;font-size:.55em;display:block;letter-spacing:10px;text-transform:uppercase;margin-bottom:6px}
-.hero-rule{width:50px;height:1px;background:rgba(255,255,255,.5);margin:24px auto}
-.hero-sub{
-  font-family:'Jost',sans-serif;
-  font-size:11px;letter-spacing:4px;
-  text-transform:uppercase;font-weight:300;
-  opacity:.8;display:flex;gap:20px;align-items:center;
-}
-.hero-sub span{opacity:.4}
-.hero-sub a{color:inherit;text-decoration:none;transition:opacity .2s}
-.hero-sub a:hover{opacity:.6}
 .hero-cta{
   position:absolute;bottom:44px;left:0;right:0;
-  display:flex;flex-direction:column;align-items:center;gap:10px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
   z-index:2;text-decoration:none;color:var(--white);
 }
 .hero-cta-label{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;opacity:.8}
-.hero-cta-arrow{
-  width:1px;height:40px;
-  background:linear-gradient(to bottom,rgba(255,255,255,.6),rgba(255,255,255,0));
-  animation:drop 2s ease-in-out infinite;
+/* flecha animada SVG */
+.hero-cta-arrow{width:20px;height:44px;display:flex;align-items:flex-start;justify-content:center}
+.hero-cta-arrow svg{animation:arrowfall 1.8s ease-in-out infinite}
+@keyframes arrowfall{
+  0%{transform:translateY(-4px);opacity:.4}
+  60%{transform:translateY(4px);opacity:1}
+  100%{transform:translateY(-4px);opacity:.4}
 }
-@keyframes drop{0%,100%{transform:scaleY(1);opacity:.7}50%{transform:scaleY(1.3);opacity:1}}
 
 /* ── SECCIONES BASE ── */
-section{width:100%;padding:90px 6%}
+section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 .section-eyebrow{
   font-family:'Jost',sans-serif;
   font-size:10px;letter-spacing:5px;
   text-transform:uppercase;font-weight:400;
-  color:var(--mid);margin-bottom:14px;
+  color:rgba(255,255,255,.45);margin-bottom:14px;
 }
 .section-heading{
   font-family:'Cormorant Garamond',serif;
   font-size:clamp(2rem,5vw,3.8rem);
   font-weight:300;font-style:italic;
-  color:var(--ink);line-height:1.1;
+  color:var(--white);line-height:1.1;
   margin-bottom:50px;
 }
 .section-rule{
@@ -143,29 +126,52 @@ section{width:100%;padding:90px 6%}
   margin-bottom:50px;
 }
 
+/* ── CARRUSEL ── */
+#carrusel{background:var(--ink);padding:0;position:relative;overflow:hidden}
+.carrusel-track-wrap{overflow:hidden;position:relative}
+.carrusel-track{
+  display:flex;
+  gap:3px;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+.carrusel-slide{
+  flex:0 0 calc(33.333% - 2px);
+  aspect-ratio:4/3;
+  overflow:hidden;
+  position:relative;
+}
+.carrusel-slide img{
+  width:100%;height:100%;
+  object-fit:cover;display:block;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+}
+.carrusel-slide:hover img{transform:scale(1.04)}
+.carr-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:10;background:none;border:none;cursor:pointer;
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  opacity:.55;transition:opacity .2s;
+}
+.carr-btn:hover{opacity:1}
+.carr-btn svg{width:24px;height:24px}
+.carr-prev{left:16px}
+.carr-next{right:16px}
+
 /* ── PRODUCTOS ── */
 #productos{background:var(--ink);padding:0}
-#productos .section-eyebrow{color:rgba(255,255,255,.5)}
+#productos .section-eyebrow{color:rgba(255,255,255,.45)}
 #productos .section-heading{color:var(--white)}
 #productos .section-rule{background:var(--gold)}
 .prod-header{padding:70px 6% 40px}
 
-/*
-  Layout (desktop) — 4 columnas, 3 filas:
-  Col: [2fr] [1fr] [1fr] [1fr]
-
-  Fila 1: horizontal (span 2 cols) | cuadrada | cuadrada
-  Fila 2: cuadrada | cuadrada      | vertical (span 2 rows)
-  Fila 3: cuadrada | cuadrada      | (vertical continúa)   | cuadrada
-*/
 .prod-mosaic{
   display:grid;
   grid-template-columns:2fr 1fr 1fr 1fr;
   grid-template-rows:auto;
   gap:3px;
 }
-
-/* item base */
 .pm{
   position:relative;overflow:hidden;
   cursor:pointer;background:#1a1a1a;
@@ -185,74 +191,60 @@ section{width:100%;padding:90px 6%}
   letter-spacing:2px;text-transform:uppercase;
   color:var(--gold);font-weight:400;text-align:center;
 }
-
-/* posiciones específicas */
-.pm-horizontal{
-  grid-column:1/3;
-  aspect-ratio:16/7;
-}
+.pm-horizontal{grid-column:1/3;aspect-ratio:16/7}
 .pm-sq{aspect-ratio:1/1}
-.pm-vertical{
-  grid-row:2/4;
-  grid-column:4/5;
-  aspect-ratio:unset;
-}
-.pm-v-inner{height:100%}
+.pm-vertical{grid-row:2/4;grid-column:4/5;aspect-ratio:unset}
 
-/* ── DESCRIPCION / panel info ── */
+/* ── PANEL LATERAL ── */
 .prod-panel{
   display:none;position:fixed;
   top:0;right:0;bottom:0;width:380px;
   background:var(--white);z-index:500;
   padding:60px 40px;overflow-y:auto;
-  box-shadow:-8px 0 40px rgba(0,0,0,.12);
+  box-shadow:-8px 0 40px rgba(0,0,0,.2);
   flex-direction:column;gap:20px;
 }
 .prod-panel.open{display:flex}
 .panel-close{
   position:absolute;top:20px;right:24px;
   background:none;border:none;cursor:pointer;
-  font-size:22px;color:var(--mid);
-  transition:color .2s;
+  font-size:22px;color:var(--mid);transition:color .2s;
 }
 .panel-close:hover{color:var(--ink)}
 .panel-img{width:100%;aspect-ratio:1/1;object-fit:cover;margin-bottom:24px}
-.panel-name{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;font-style:italic;margin-bottom:8px}
+.panel-name{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;font-style:italic;color:var(--ink);margin-bottom:8px}
 .panel-desc{font-family:'Jost',sans-serif;font-size:.88rem;font-weight:300;line-height:1.7;color:var(--mid)}
-.panel-overlay-bg{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.3);z-index:499;
-}
+.panel-overlay-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:499}
 .panel-overlay-bg.open{display:block}
 
 /* ── CONTACTO ── */
-#contacto{background:var(--cream);padding:50px 6%}
+#contacto{background:var(--ink);padding:36px 6%}
+#contacto .section-eyebrow{color:rgba(255,255,255,.45)}
 .contacto-wrap{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:80px;align-items:start;
+  gap:60px;align-items:center;
 }
-.contacto-left{}
-.contact-list{display:flex;flex-direction:column;gap:28px;margin-top:10px}
+.contact-list{display:flex;flex-direction:column;gap:22px}
 .contact-row{display:flex;align-items:center;gap:18px}
 .contact-icon-wrap{
-  width:44px;height:44px;border:1px solid var(--rule);
+  width:40px;height:40px;border:1px solid rgba(255,255,255,.15);
   border-radius:50%;display:flex;align-items:center;justify-content:center;
   flex-shrink:0;transition:border-color .2s,background .2s;
 }
-.contact-row:hover .contact-icon-wrap{border-color:var(--gold);background:rgba(200,168,75,.07)}
+.contact-row:hover .contact-icon-wrap{border-color:var(--gold);background:rgba(200,168,75,.08)}
 .contact-icon-wrap svg{width:18px;height:18px}
 .contact-detail{
   font-family:'Jost',sans-serif;
-  font-size:.9rem;font-weight:300;
-  color:var(--mid);
+  font-size:.88rem;font-weight:300;
+  color:rgba(255,255,255,.7);
 }
 .contact-detail a{color:inherit;text-decoration:none;transition:color .2s}
 .contact-detail a:hover{color:var(--gold)}
 .map-box{
-  aspect-ratio:4/3;overflow:hidden;
-  border:1px solid var(--rule);
-  filter:sepia(20%) contrast(.95);
+  aspect-ratio:16/9;overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);
+  filter:grayscale(30%) brightness(.85);
 }
 .map-box iframe{width:100%;height:100%;border:none;display:block}
 
@@ -272,7 +264,7 @@ section{width:100%;padding:90px 6%}
 /* ── MOBILE NAV DRAWER ── */
 #drawer{
   position:fixed;inset:0;
-  background:rgba(250,248,244,.97);
+  background:rgba(28,26,23,.97);
   z-index:300;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
@@ -284,38 +276,38 @@ section{width:100%;padding:90px 6%}
 .drawer-close{
   position:absolute;top:22px;right:28px;
   background:none;border:none;cursor:pointer;
-  font-size:26px;color:var(--mid);
+  font-size:26px;color:rgba(255,255,255,.6);
 }
 #drawer a{
   font-family:'Cormorant Garamond',serif;
   font-size:2.8rem;font-weight:300;font-style:italic;
-  color:var(--ink);text-decoration:none;letter-spacing:1px;
+  color:var(--white);text-decoration:none;letter-spacing:1px;
   transition:color .2s;
 }
 #drawer a:hover{color:var(--gold)}
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
-  #nav{padding:18px 24px}
+  #nav{padding:18px 24px;grid-template-columns:1fr auto}
   .nav-links:not(.right){display:none}
   .nav-links.right{display:none}
   .nav-menu-btn{display:flex;align-items:center;justify-content:flex-end;width:100%}
-  #nav{grid-template-columns:1fr auto}
   .nav-brand{text-align:left}
-  /* mosaico tablet: 2 cols */
   .prod-mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto}
   .pm-horizontal{grid-column:1/3;aspect-ratio:16/7}
   .pm-vertical{grid-row:auto;grid-column:auto;aspect-ratio:1/1}
-  .contacto-wrap{grid-template-columns:1fr;gap:40px}
+  .contacto-wrap{grid-template-columns:1fr;gap:32px}
   .map-box{aspect-ratio:16/9}
+  .carrusel-slide{flex:0 0 calc(50% - 2px)}
 }
 @media(max-width:560px){
-  section{padding:70px 5%}
+  section{padding:60px 5%}
   .prod-mosaic{grid-template-columns:1fr 1fr}
   .pm-horizontal{grid-column:1/3;aspect-ratio:16/8}
   .pm-vertical{grid-row:auto;grid-column:auto;aspect-ratio:1/1}
   .prod-panel{width:100%}
-  .hero-title{font-size:clamp(2.4rem,12vw,4rem)}
+  .hero-logo{width:clamp(140px,70vw,280px)}
+  .carrusel-slide{flex:0 0 calc(100% - 0px)}
 }
 </style>
 </head>
@@ -324,7 +316,7 @@ section{width:100%;padding:90px 6%}
 <!-- NAV -->
 <nav id="nav" class="hero-mode">
   <div class="nav-links">
-    <a href="#productos">Productos</a>
+    <a href="#productos">Nuestros productos</a>
   </div>
   <a class="nav-brand" href="#">
     Craft Vegan Bakery<br><span>Belgrano R</span>
@@ -344,7 +336,7 @@ section{width:100%;padding:90px 6%}
 <!-- MOBILE DRAWER -->
 <div id="drawer">
   <button class="drawer-close" onclick="closeDrawer()">&#x2715;</button>
-  <a href="#productos" onclick="closeDrawer()">Productos</a>
+  <a href="#productos" onclick="closeDrawer()">Nuestros productos</a>
   <a href="#contacto" onclick="closeDrawer()">Contacto</a>
 </div>
 
@@ -352,22 +344,39 @@ section{width:100%;padding:90px 6%}
 <section id="hero">
   <img class="hero-bg" src="image/portadanueva.png" alt="Craft Vegan Bakery">
   <div class="hero-body">
-    <p class="hero-eyebrow">Panadería vegana artesanal · Belgrano R · Buenos Aires</p>
-    <h1 class="hero-title">
-      <strong>Craft Vegan Bakery</strong>
-      Belgrano R
-    </h1>
-    <div class="hero-rule"></div>
-    <p class="hero-sub">
-      <a href="#productos">Productos</a>
-      <span>·</span>
-      <a href="#contacto">Contacto</a>
-    </p>
+    <img class="hero-logo" src="image/logo.png" alt="Craft Vegan Bakery Belgrano R">
   </div>
-  <a class="hero-cta" href="#productos">
-    <span class="hero-cta-label">Conocé más</span>
-    <div class="hero-cta-arrow"></div>
+  <a class="hero-cta" href="#carrusel">
+    <span class="hero-cta-label">Conocenos</span>
+    <div class="hero-cta-arrow">
+      <svg viewBox="0 0 20 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="10" y1="0" x2="10" y2="36" stroke="white" stroke-width="1"/>
+        <polyline points="3,28 10,38 17,28" fill="none" stroke="white" stroke-width="1" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+    </div>
   </a>
+</section>
+
+<!-- CARRUSEL -->
+<section id="carrusel">
+  <button class="carr-btn carr-prev" onclick="carrMove(-1)" aria-label="Anterior">
+    <svg viewBox="0 0 24 24" fill="none"><polyline points="15,6 9,12 15,18" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="carrusel-track-wrap">
+    <div class="carrusel-track" id="carr-track">
+      <div class="carrusel-slide"><img src="image/01.jpg" alt="Café especialidad"></div>
+      <div class="carrusel-slide"><img src="image/02.jpg" alt="Panes caseros"></div>
+      <div class="carrusel-slide"><img src="image/03.jpg" alt="Medialunas"></div>
+      <div class="carrusel-slide"><img src="image/04.jpg" alt="Budines"></div>
+      <div class="carrusel-slide"><img src="image/05.jpg" alt="Galletitas"></div>
+      <div class="carrusel-slide"><img src="image/06.jpg" alt="Cremona"></div>
+      <div class="carrusel-slide"><img src="image/07.jpg" alt="Baguettes"></div>
+      <div class="carrusel-slide"><img src="image/08.jpg" alt="Pan de campo"></div>
+    </div>
+  </div>
+  <button class="carr-btn carr-next" onclick="carrMove(1)" aria-label="Siguiente">
+    <svg viewBox="0 0 24 24" fill="none"><polyline points="9,6 15,12 9,18" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
 </section>
 
 <!-- PRODUCTOS -->
@@ -456,8 +465,6 @@ section{width:100%;padding:90px 6%}
 <!-- CONTACTO -->
 <section id="contacto">
   <p class="section-eyebrow">Encontranos</p>
-  <h2 class="section-heading">Contacto</h2>
-  <div class="section-rule"></div>
   <div class="contacto-wrap">
 
     <div class="contacto-left">
@@ -514,11 +521,10 @@ section{width:100%;padding:90px 6%}
 </a>
 
 <script>
-// Nav scroll behavior
+// Nav scroll
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
-  const heroH = document.getElementById('hero').offsetHeight;
-  if (window.scrollY > heroH - 80) {
+  if (window.scrollY > window.innerHeight - 80) {
     nav.classList.remove('hero-mode');
     nav.classList.add('scrolled');
   } else {
@@ -546,6 +552,59 @@ function closePanel(){
   document.getElementById('panel-bg').classList.remove('open');
   document.body.style.overflow='';
 }
+
+// Carrusel
+(function(){
+  const track = document.getElementById('carr-track');
+  const slides = track.querySelectorAll('.carrusel-slide');
+  const total = slides.length;
+  let current = 0;
+
+  function getVisible(){
+    const w = window.innerWidth;
+    if(w <= 560) return 1;
+    if(w <= 900) return 2;
+    return 3;
+  }
+
+  function update(){
+    const vis = getVisible();
+    const pct = 100 / vis;
+    slides.forEach(s => s.style.flex = `0 0 calc(${pct}% - 2px)`);
+    const max = total - vis;
+    if(current > max) current = max;
+    if(current < 0) current = 0;
+    track.style.transform = `translateX(calc(-${current * pct}% - ${current * 3}px))`;
+  }
+
+  window.carrMove = function(dir){
+    const vis = getVisible();
+    const max = total - vis;
+    current = Math.max(0, Math.min(current + dir, max));
+    update();
+  };
+
+  // Auto-avance lento
+  let auto = setInterval(() => {
+    const vis = getVisible();
+    const max = total - vis;
+    current = current >= max ? 0 : current + 1;
+    update();
+  }, 3200);
+
+  track.parentElement.parentElement.addEventListener('mouseenter', () => clearInterval(auto));
+  track.parentElement.parentElement.addEventListener('mouseleave', () => {
+    auto = setInterval(() => {
+      const vis = getVisible();
+      const max = total - vis;
+      current = current >= max ? 0 : current + 1;
+      update();
+    }, 3200);
+  });
+
+  window.addEventListener('resize', update);
+  update();
+})();
 </script>
 </body>
 </html>
