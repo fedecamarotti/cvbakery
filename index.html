@@ -6,7 +6,7 @@
 <title>Craft Vegan Bakery Belgrano R</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -80,43 +80,26 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);over
   text-align:center;
   display:flex;flex-direction:column;align-items:center;
 }
-.hero-logo{
-  width:clamp(180px,32vw,460px);
-  height:auto;
-  display:block;
-}
-.hero-cvb{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.8rem,7vw,6rem);
-  font-weight:300;
-  letter-spacing:clamp(4px,1.5vw,10px);
-  color:var(--white);line-height:1;
+.hero-brand-main{
+  font-family:'Bodoni Moda',serif;
+  font-size:clamp(2rem,4.5vw,3.8rem);
+  font-weight:400;
+  letter-spacing:clamp(6px,2vw,16px);
   text-transform:uppercase;
-  font-style:normal;
-  white-space:nowrap;
-  display:flex;align-items:center;
+  color:var(--white);
+  line-height:1;
 }
-.hero-v{
-  width:.75em;height:.9em;display:inline-block;
-  vertical-align:middle;margin:0 .01em;position:relative;top:-.04em;
+.hero-brand-main .v-gold{
+  color:#efc401;
 }
-.hero-v-img{
-  height:.95em;
-  width:auto;
-  display:inline-block;
-  vertical-align:middle;
-  position:relative;
-  top:-.05em;
-}
-.hero-belgrano{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(1rem,2.5vw,2rem);
+.hero-brand-sub{
+  font-family:'Jost',sans-serif;
+  font-size:clamp(.6rem,1vw,.78rem);
   font-weight:300;
-  letter-spacing:clamp(4px,1.5vw,12px);
+  letter-spacing:clamp(5px,2vw,16px);
   text-transform:uppercase;
   color:var(--gold);
-  margin-top:10px;
-  font-style:normal;
+  margin-top:16px;
 }
 .hero-cta{
   position:absolute;bottom:44px;left:0;right:0;
@@ -357,10 +340,8 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 <section id="hero">
   <img class="hero-bg" src="image/portadanueva.png" alt="Craft Vegan Bakery">
   <div class="hero-body">
-    <div class="hero-cvb">
-      C<img class="hero-v-img" src="image/v-trigo.png" alt="V">BAKERY
-    </div>
-    <div class="hero-belgrano">Belgrano R</div>
+    <div class="hero-brand-main">C<span class="v-gold">V</span>BAKERY</div>
+    <div class="hero-brand-sub">Belgrano R</div>
   </div>
   <a class="hero-cta" href="#carrusel">
     <div class="hero-cta-arrow">
