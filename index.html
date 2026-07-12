@@ -85,6 +85,39 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);over
   height:auto;
   display:block;
 }
+.hero-cvb{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,7vw,6rem);
+  font-weight:300;
+  letter-spacing:clamp(4px,1.5vw,10px);
+  color:var(--white);line-height:1;
+  text-transform:uppercase;
+  font-style:normal;
+  white-space:nowrap;
+  display:flex;align-items:center;
+}
+.hero-v{
+  width:.75em;height:.9em;display:inline-block;
+  vertical-align:middle;margin:0 .01em;position:relative;top:-.04em;
+}
+.hero-v-img{
+  height:.95em;
+  width:auto;
+  display:inline-block;
+  vertical-align:middle;
+  position:relative;
+  top:-.05em;
+}
+.hero-belgrano{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,2.5vw,2rem);
+  font-weight:300;
+  letter-spacing:clamp(4px,1.5vw,12px);
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-top:10px;
+  font-style:normal;
+}
 .hero-cta{
   position:absolute;bottom:44px;left:0;right:0;
   display:flex;flex-direction:column;align-items:center;gap:12px;
@@ -324,7 +357,10 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 <section id="hero">
   <img class="hero-bg" src="image/portadanueva.png" alt="Craft Vegan Bakery">
   <div class="hero-body">
-    <img src="image/logo.png" alt="CVBakery Belgrano R" class="hero-logo">
+    <div class="hero-cvb">
+      C<img class="hero-v-img" src="image/v-trigo.png" alt="V">BAKERY
+    </div>
+    <div class="hero-belgrano">Belgrano R</div>
   </div>
   <a class="hero-cta" href="#carrusel">
     <div class="hero-cta-arrow">
