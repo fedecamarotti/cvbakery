@@ -55,7 +55,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);over
 .nav-menu-btn{
   display:none;background:none;border:none;
   cursor:pointer;padding:4px;color:var(--white);
-  position:absolute;right:24px;
+  position:absolute;right:24px;top:50%;transform:translateY(-50%);
 }
 .nav-menu-btn svg{width:22px;height:16px}
 
@@ -159,7 +159,7 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   100%{ transform: translateX(var(--carr-shift)); }
 }
 .carrusel-slide{
-  flex:0 0 calc(25% - 9px); /* 4 visibles */
+  flex:0 0 calc(20% - 10px); /* 5 visibles, más chicas */
   aspect-ratio:1086/1448;
   overflow:hidden;
   position:relative;
@@ -279,21 +279,18 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 }
 #drawer a:hover{color:var(--gold)}
 
-/* ── RESPONSIVE ── */
 @media(max-width:900px){
   .nav-center-links{display:none}
   .nav-menu-btn{display:flex}
-  #nav{justify-content:flex-end;padding:18px 24px}
+  #nav{justify-content:center;padding:18px 24px}
   .contacto-wrap{grid-template-columns:1fr;gap:32px}
   .map-box{aspect-ratio:16/9}
-  .carrusel-outer{padding:0 44px}
 }
 @media(max-width:560px){
   section{padding:60px 5%}
   .carrusel-outer{padding:0}
   .carr-btn{display:none}
-  .carrusel-track-wrap{cursor:grab}
-  .carrusel-track-wrap:active{cursor:grabbing}
+  .hero-cta{bottom:60px}
 }
 </style>
 </head>
@@ -386,7 +383,7 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 
     <!-- Derecha: info -->
     <div class="contacto-info-col">
-      <p class="contacto-col-label" style="text-align:left">Contacto</p>
+      <p class="contacto-col-label" style="text-align:center">Contacto</p>
       <div class="contact-list">
 
         <div class="contact-row">
@@ -519,43 +516,6 @@ function closeDrawer(){ document.getElementById('drawer').classList.remove('open
       track.style.animation = `carrScroll ${dur}s linear infinite`;
     }, 1800);
   };
-
-  // Touch swipe
-  const wrap = track.parentElement;
-  let touchStartX = 0;
-  let touchStartTransform = 0;
-  wrap.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-    // Pausar animación y capturar posición actual
-    const matrix = new DOMMatrix(window.getComputedStyle(track).transform);
-    touchStartTransform = matrix.m41;
-    track.style.animation = 'none';
-    track.style.transform = `translateX(${touchStartTransform}px)`;
-  }, {passive:true});
-  wrap.addEventListener('touchmove', e => {
-    const dx = e.touches[0].clientX - touchStartX;
-    track.style.transform = `translateX(${touchStartTransform + dx}px)`;
-  }, {passive:true});
-  wrap.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const unitW = getSingleUnitW();
-    const n = origSlides.length;
-    // Snap al slide más cercano
-    const raw = touchStartTransform + dx;
-    const snapped = Math.round(raw / unitW) * unitW;
-    const min = -(n * unitW);
-    const clamped = Math.max(min, Math.min(0, snapped));
-    track.style.transition = 'transform .35s cubic-bezier(.4,0,.2,1)';
-    track.style.transform = `translateX(${clamped}px)`;
-    setTimeout(() => {
-      track.style.transition = '';
-      // Reanudar animación desde esa posición
-      const progress = Math.abs(clamped) / (n * unitW);
-      const dur = n * 5;
-      track.style.animationDelay = (-progress * dur) + 's';
-      track.style.animation = `carrScroll ${dur}s linear infinite`;
-    }, 400);
-  }, {passive:true});
 
   window.addEventListener('resize', startAnim);
   startAnim();
