@@ -136,6 +136,44 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   margin-bottom:50px;
 }
 
+/* ── QUIENES SOMOS ── */
+#quienes{background:var(--ink);padding:90px 6%}
+.qs-wrap{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+  align-items:center;
+}
+.qs-img-col{overflow:hidden}
+.qs-img{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  display:block;
+  border-radius:4px;
+}
+.qs-text-col{display:flex;flex-direction:column;gap:0}
+.qs-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.6rem,3.5vw,2.8rem);
+  font-weight:300;font-style:italic;
+  color:var(--gold);
+  letter-spacing:1px;
+  margin-top:-4px;
+  margin-bottom:28px;
+}
+.qs-body{
+  font-family:'Jost',sans-serif;
+  font-size:clamp(.85rem,1.1vw,.98rem);
+  font-weight:300;
+  line-height:1.85;
+  color:rgba(255,255,255,.78);
+}
+.qs-body strong{
+  font-weight:500;
+  color:var(--white);
+}
+
 /* ── CARRUSEL ── */
 #carrusel{background:#F0EDE8;padding:60px 0 70px;position:relative}
 .carr-title{
@@ -285,6 +323,7 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   #nav{justify-content:center;padding:28px 24px}
   .contacto-wrap{grid-template-columns:1fr;gap:32px}
   .map-box{aspect-ratio:16/9}
+  .qs-wrap{grid-template-columns:1fr;gap:36px}
 }
 @media(max-width:560px){
   section{padding:60px 5%}
@@ -341,6 +380,21 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
       </svg>
     </div>
   </a>
+</section>
+
+<!-- QUIENES SOMOS -->
+<section id="quienes">
+  <div class="qs-wrap">
+    <div class="qs-img-col">
+      <img src="image/local.png" alt="CVBakery local" class="qs-img">
+    </div>
+    <div class="qs-text-col">
+      <p class="section-eyebrow" style="margin-bottom:4px">Quienes</p>
+      <h2 class="qs-title">Somos</h2>
+      <p class="qs-body">En CVBakery contamos con productos artesanales <strong>100% plant based</strong> con ingredientes de primera calidad. Nuestra propuesta incluye <strong>panes de masa madre</strong> con harinas orgánicas, pastelería, tartas, empanadas, burritos, alfajores, cookies y muchas otras opciones dulces y saladas, pensadas para disfrutar en cualquier momento del día. Todo lo que hacemos está elaborado con dedicación pero sobre todo con mucho amor, para que cada visita o pedido a domicilio, se convierta en una experiencia única.</p>
+      <p class="qs-body" style="margin-top:18px">Y no te olvides de probar nuestro <strong>café de especialidad</strong> de granos seleccionados!</p>
+    </div>
+  </div>
 </section>
 
 <!-- CARRUSEL -->
