@@ -137,14 +137,17 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 }
 
 /* ── QUIENES SOMOS ── */
-#quienes{background:var(--ink);padding:90px 6%}
+#quienes{background:var(--ink);padding:60px 6%}
 .qs-wrap{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:70px;
+  grid-template-columns:1fr 2fr;
+  gap:50px;
   align-items:center;
 }
-.qs-img-col{overflow:hidden}
+.qs-img-col{
+  max-width:50%;
+  overflow:hidden;
+}
 .qs-img{
   width:100%;
   aspect-ratio:4/5;
@@ -184,7 +187,8 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   letter-spacing:1px;margin-bottom:40px;
 }
 .carrusel-outer{position:relative}
-.carrusel-track-wrap{overflow:hidden}
+.carrusel-track-wrap{overflow:hidden;cursor:grab}
+.carrusel-track-wrap:active{cursor:grabbing}
 .carrusel-track{
   display:flex;
   gap:12px;
@@ -197,7 +201,7 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   100%{ transform: translateX(var(--carr-shift)); }
 }
 .carrusel-slide{
-  flex:0 0 calc(15% - 10px); /* ~6-7 visibles, 75% del tamaño anterior */
+  flex:0 0 calc(17.25% - 10px);
   aspect-ratio:1086/1448;
   overflow:hidden;
   position:relative;
@@ -323,7 +327,20 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   #nav{justify-content:center;padding:28px 24px}
   .contacto-wrap{grid-template-columns:1fr;gap:32px}
   .map-box{aspect-ratio:16/9}
-  .qs-wrap{grid-template-columns:1fr;gap:36px}
+  .qs-wrap{
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+    align-items:flex-start;
+  }
+  .qs-img-col{
+    max-width:42%;
+    flex:0 0 42%;
+  }
+  .qs-text-col{
+    flex:1;
+    min-width:0;
+  }
 }
 @media(max-width:560px){
   section{padding:60px 5%}
@@ -509,11 +526,10 @@ function closeDrawer(){ document.getElementById('drawer').classList.remove('open
   const origSlides = Array.from(track.querySelectorAll('.carrusel-slide'));
   const gap = 12;
 
-  // Clonar slides para loop infinito
   origSlides.forEach(s => track.appendChild(s.cloneNode(true)));
 
   const n = origSlides.length;
-  const dur = n * 5; // segundos totales
+  const dur = n * 5;
 
   function getSlideW(){
     const wrap = track.parentElement;
@@ -523,27 +539,33 @@ function closeDrawer(){ document.getElementById('drawer').classList.remove('open
 
   function applyWidths(){
     const sw = getSlideW();
-    track.querySelectorAll('.carrusel-slide').forEach(s => {
-      s.style.flex = `0 0 ${sw}px`;
-    });
-    // Actualizar el shift sin reiniciar la animación
+    track.querySelectorAll('.carrusel-slide').forEach(s => s.style.flex = `0 0 ${sw}px`);
     const unitW = sw + gap;
-    const totalShift = -(n * unitW);
-    track.style.setProperty('--carr-shift', totalShift + 'px');
+    track.style.setProperty('--carr-shift', -(n * unitW) + 'px');
   }
 
-  // Iniciar animación UNA sola vez
-  function initAnim(){
-    applyWidths();
+  function getCurrentX(){
+    return new DOMMatrix(window.getComputedStyle(track).transform).m41;
+  }
+
+  function resumeFrom(x){
     const sw = getSlideW();
     const unitW = sw + gap;
-    const totalShift = -(n * unitW);
-    track.style.setProperty('--carr-shift', totalShift + 'px');
-    track.style.animationDuration = dur + 's';
+    const total = n * unitW;
+    // normalizar x dentro del rango del loop
+    let norm = ((x % total) + total) % total;
+    const progress = norm / total;
+    track.style.animationDelay = (-progress * dur) + 's';
+    track.style.animationPlayState = 'running';
+    track.style.animation = `carrScroll ${dur}s ${-progress * dur}s linear infinite`;
+  }
+
+  function initAnim(){
+    applyWidths();
     track.style.animation = `carrScroll ${dur}s linear infinite`;
   }
 
-  // IntersectionObserver: pausa cuando sale de la pantalla, reanuda cuando vuelve
+  // IntersectionObserver: pausa al salir de pantalla, reanuda al volver
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       track.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
@@ -551,9 +573,56 @@ function closeDrawer(){ document.getElementById('drawer').classList.remove('open
   }, { threshold: 0 });
   observer.observe(document.getElementById('carrusel'));
 
-  // En resize solo actualiza tamaños, sin tocar la animación
-  window.addEventListener('resize', applyWidths);
+  // ── DRAG (mouse) ──
+  let dragStartX = 0, dragStartPosX = 0, isDragging = false;
 
+  track.parentElement.addEventListener('mousedown', e => {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartPosX = getCurrentX();
+    track.style.animation = 'none';
+    track.style.transform = `translateX(${dragStartPosX}px)`;
+    track.parentElement.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', e => {
+    if(!isDragging) return;
+    const dx = e.clientX - dragStartX;
+    track.style.transform = `translateX(${dragStartPosX + dx}px)`;
+  });
+
+  window.addEventListener('mouseup', e => {
+    if(!isDragging) return;
+    isDragging = false;
+    track.parentElement.style.cursor = '';
+    const finalX = dragStartPosX + (e.clientX - dragStartX);
+    track.style.transform = '';
+    resumeFrom(-finalX);
+  });
+
+  // ── SWIPE (touch) ──
+  let touchStartX = 0, touchStartPosX = 0;
+
+  track.parentElement.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartPosX = getCurrentX();
+    track.style.animation = 'none';
+    track.style.transform = `translateX(${touchStartPosX}px)`;
+  }, {passive:true});
+
+  track.parentElement.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - touchStartX;
+    track.style.transform = `translateX(${touchStartPosX + dx}px)`;
+  }, {passive:true});
+
+  track.parentElement.addEventListener('touchend', e => {
+    const finalX = touchStartPosX + (e.changedTouches[0].clientX - touchStartX);
+    track.style.transform = '';
+    resumeFrom(-finalX);
+  }, {passive:true});
+
+  window.addEventListener('resize', applyWidths);
   initAnim();
 })();
 </script>
