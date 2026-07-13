@@ -54,10 +54,10 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);over
 }
 .nav-menu-btn{
   display:none;background:none;border:none;
-  cursor:pointer;padding:4px;color:var(--white);
-  position:absolute;right:24px;top:50%;transform:translateY(-50%);
+  cursor:pointer;padding:8px;color:var(--white);
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
 }
-.nav-menu-btn svg{width:22px;height:16px}
+.nav-menu-btn svg{width:26px;height:18px}
 
 /* ── HERO ── */
 #hero{
@@ -159,7 +159,7 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   100%{ transform: translateX(var(--carr-shift)); }
 }
 .carrusel-slide{
-  flex:0 0 calc(20% - 10px); /* 5 visibles, más chicas */
+  flex:0 0 calc(15% - 10px); /* ~6-7 visibles, 75% del tamaño anterior */
   aspect-ratio:1086/1448;
   overflow:hidden;
   position:relative;
@@ -282,7 +282,7 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 @media(max-width:900px){
   .nav-center-links{display:none}
   .nav-menu-btn{display:flex}
-  #nav{justify-content:center;padding:18px 24px}
+  #nav{justify-content:center;padding:28px 24px}
   .contacto-wrap{grid-template-columns:1fr;gap:32px}
   .map-box{aspect-ratio:16/9}
 }
@@ -458,67 +458,49 @@ function closeDrawer(){ document.getElementById('drawer').classList.remove('open
   // Clonar slides para loop infinito
   origSlides.forEach(s => track.appendChild(s.cloneNode(true)));
 
+  const n = origSlides.length;
+  const dur = n * 5; // segundos totales
+
   function getSlideW(){
     const wrap = track.parentElement;
-    const vis = window.innerWidth <= 560 ? 1 : window.innerWidth <= 900 ? 2 : 4;
+    const vis = window.innerWidth <= 560 ? 2 : window.innerWidth <= 900 ? 3 : 6;
     return (wrap.offsetWidth - gap * (vis - 1)) / vis;
   }
 
-  function getSingleUnitW(){
-    return getSlideW() + gap;
-  }
-
-  function applySlideWidths(){
+  function applyWidths(){
     const sw = getSlideW();
     track.querySelectorAll('.carrusel-slide').forEach(s => {
       s.style.flex = `0 0 ${sw}px`;
     });
-  }
-
-  function startAnim(){
-    applySlideWidths();
-    const n = origSlides.length;
-    const unitW = getSingleUnitW();
+    // Actualizar el shift sin reiniciar la animación
+    const unitW = sw + gap;
     const totalShift = -(n * unitW);
     track.style.setProperty('--carr-shift', totalShift + 'px');
-    // Duración: ~4s por slide para que sea lento
-    track.style.animationDuration = (n * 5) + 's';
-    track.style.transform = '';
-    track.style.animation = 'none';
-    track.offsetHeight; // reflow
-    track.style.animation = `carrScroll ${n * 5}s linear infinite`;
   }
 
-  // Flechas: pausan la animación, saltan manualmente y retoman
-  let manualOffset = 0;
-  window.carrMove = function(dir){
-    const unitW = getSingleUnitW();
-    const n = origSlides.length;
-    // Obtenemos posición actual via getComputedStyle
-    const matrix = new DOMMatrix(window.getComputedStyle(track).transform);
-    let curX = matrix.m41;
-    manualOffset = curX - dir * unitW;
-    // Clampear entre 0 y -n*unitW
-    const min = -n * unitW;
-    if(manualOffset > 0) manualOffset = 0;
-    if(manualOffset < min) manualOffset = min + unitW;
-    track.style.animation = 'none';
-    track.style.transform = `translateX(${manualOffset}px)`;
-    // Reanudar animación desde ese punto después de 2s sin clicks
-    clearTimeout(window._carrResume);
-    window._carrResume = setTimeout(() => {
-      // Ajustar animationDelay para que continúe desde donde está
-      const n2 = origSlides.length;
-      const total = n2 * getSingleUnitW();
-      const progress = Math.abs(manualOffset) / total;
-      const dur = n2 * 5;
-      track.style.animationDelay = (-progress * dur) + 's';
-      track.style.animation = `carrScroll ${dur}s linear infinite`;
-    }, 1800);
-  };
+  // Iniciar animación UNA sola vez
+  function initAnim(){
+    applyWidths();
+    const sw = getSlideW();
+    const unitW = sw + gap;
+    const totalShift = -(n * unitW);
+    track.style.setProperty('--carr-shift', totalShift + 'px');
+    track.style.animationDuration = dur + 's';
+    track.style.animation = `carrScroll ${dur}s linear infinite`;
+  }
 
-  window.addEventListener('resize', startAnim);
-  startAnim();
+  // IntersectionObserver: pausa cuando sale de la pantalla, reanuda cuando vuelve
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      track.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+    });
+  }, { threshold: 0 });
+  observer.observe(document.getElementById('carrusel'));
+
+  // En resize solo actualiza tamaños, sin tocar la animación
+  window.addEventListener('resize', applyWidths);
+
+  initAnim();
 })();
 </script>
 </body>
