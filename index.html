@@ -176,8 +176,10 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 
 /* mobile quienes somos */
 .qs-mobile-header{display:none}
+.qs-mobile-img{display:none}
 .qs-expand-wrap{display:none}
 .qs-extra{display:none}
+.qs-dots{display:inline}
 .qs-toggle{
   background:none;border:1px solid rgba(255,255,255,.25);
   color:rgba(255,255,255,.7);
@@ -338,13 +340,9 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   #nav{justify-content:center;padding:28px 24px}
   .contacto-wrap{grid-template-columns:1fr;gap:32px}
   .map-box{aspect-ratio:16/9}
-  /* quienes somos desktop layout oculto en mobile */
   .qs-wrap{display:none}
-  /* quienes somos mobile layout */
   .qs-mobile-header{
-    display:block;
-    text-align:center;
-    margin-bottom:20px;
+    display:block;text-align:center;margin-bottom:20px;
   }
   .qs-mobile-header .section-eyebrow{color:rgba(255,255,255,.45);margin-bottom:4px}
   .qs-mobile-title{
@@ -353,13 +351,9 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
     color:var(--gold);letter-spacing:1px;margin-top:-4px;
   }
   .qs-mobile-img{
-    display:block;
-    width:72%;
-    max-width:300px;
-    aspect-ratio:1/1;
-    object-fit:cover;
-    border-radius:4px;
-    margin:0 auto 24px;
+    display:block;width:72%;max-width:300px;
+    aspect-ratio:1/1;object-fit:cover;
+    border-radius:4px;margin:0 auto 24px;
   }
   .qs-expand-wrap{
     display:block;
@@ -370,6 +364,7 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   .qs-expand-wrap strong{font-weight:500;color:var(--white)}
   .qs-extra{display:none}
   .qs-extra.open{display:inline}
+  .qs-dots.hidden{display:none}
 }
 @media(max-width:560px){
   section{padding:60px 5%}
@@ -433,7 +428,7 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 
 <!-- QUIENES SOMOS -->
 <section id="quienes">
-  <!-- Desktop -->
+  <!-- Desktop: una sola foto a la izquierda, texto a la derecha -->
   <div class="qs-wrap">
     <div class="qs-img-col">
       <img src="image/local.png" alt="CVBakery local" class="qs-img">
@@ -452,7 +447,7 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
   </div>
   <img src="image/local.png" alt="CVBakery local" class="qs-mobile-img">
   <div class="qs-expand-wrap">
-    En CVBakery contamos con productos artesanales <strong>100% plant based</strong> con ingredientes de primera calidad.<span class="qs-extra"> Nuestra propuesta incluye <strong>panes de masa madre</strong> con harinas orgánicas, pastelería, tartas, empanadas, burritos, alfajores, cookies y muchas otras opciones dulces y saladas, pensadas para disfrutar en cualquier momento del día. Todo lo que hacemos está elaborado con dedicación pero sobre todo con mucho amor, para que cada visita o pedido a domicilio, se convierta en una experiencia única.<br><br>Y no te olvides de probar nuestro <strong>café de especialidad</strong> de granos seleccionados!</span>
+    En CVBakery contamos con productos artesanales <strong>100% plant based</strong> con ingredientes de primera calidad. Nuestra propuesta incluye <strong>panes de masa madre</strong> con harinas<span class="qs-dots">...</span><span class="qs-extra"> orgánicas, pastelería, tartas, empanadas, burritos, alfajores, cookies y muchas otras opciones dulces y saladas, pensadas para disfrutar en cualquier momento del día. Todo lo que hacemos está elaborado con dedicación pero sobre todo con mucho amor, para que cada visita o pedido a domicilio, se convierta en una experiencia única.<br><br>Y no te olvides de probar nuestro <strong>café de especialidad</strong> de granos seleccionados!</span>
     <br>
     <button class="qs-toggle" id="qs-toggle-btn" onclick="toggleQS()">Ver más</button>
   </div>
@@ -551,8 +546,10 @@ section{width:100%;padding:90px 6%;background:var(--ink);color:var(--white)}
 // Mobile quienes somos expand/collapse
 function toggleQS(){
   const extra = document.querySelector('.qs-extra');
+  const dots = document.querySelector('.qs-dots');
   const btn = document.getElementById('qs-toggle-btn');
   const open = extra.classList.toggle('open');
+  dots.classList.toggle('hidden', open);
   btn.textContent = open ? 'Ver menos' : 'Ver más';
 }
 
